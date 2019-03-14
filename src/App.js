@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Switch } from 'react-router-dom';
 import Home from './Home';
 import Characters from './Characters';
 import Planets from './Planets';
@@ -15,10 +15,13 @@ class App extends Component {
           <li><Link to="/characters">Characters</Link></li>
           <li><Link to="/planets">Planets</Link></li>
         </ul>
-
-        <Route exact path="/" component={Home}>Home</Route>
-        <Route path="/characters" component={Characters}>Characters</Route>
-        <Route path="/planets" component={Planets}>Planets</Route>
+        <Switch>
+          <Route exact path="/" component={Home}>Home</Route>
+          <Route exact path="/characters" component={Characters}>Characters</Route>
+          <Route exact path="/planets" component={Planets}>Planets</Route>
+          <Route render={() => (<div>Page not found.</div>)} />
+        </Switch>
+        
       </div>
     );
   }
