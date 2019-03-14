@@ -1,31 +1,40 @@
 import React from 'react';
 import * as peopleAPI from '../api/people';
+import Pagination from '../Common/Pagination';
 
 class Characters extends React.Component { 
   state = {
     people: [],
-    isLoaded: false
+    isLoaded: false,
+    page: 1,
+    count: 0
   };
   
   async componentDidMount() {
-    const people = await peopleAPI.getAll();
+    const peopleData = await peopleAPI.getAll();
+    const count = peopleData.count;
+    const people = peopleData.results;
+
     this.setState({
-      people,
-      isLoaded: true
+      people: people,
+      isLoaded: true,
+      count: count
     });
-    // console.log(this.state.people);
   }
 
   render() {
-    const { people, isLoaded } = this.state;
+    const { people, isLoaded, count, page } = this.state;
 
     return (
       <div className="Characters">
         Characters
         { isLoaded ? (
-          <ul>
-            {people.map(person => <li key={person.name}>{person.name}</li>)}
-          </ul>
+          <>
+            <Pagination count={count} page={page} />
+            <ul>
+              {people.map(person => <li key={person.name}>{person.name}</li>)}
+            </ul>
+          </>
         ) : (
           <p>Loading...</p>
         )}

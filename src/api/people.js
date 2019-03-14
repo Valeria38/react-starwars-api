@@ -1,8 +1,7 @@
 import { get } from './_helper';
 
 export const getAll = () => {
-  return get('people')
-  .then(data => data.results);
+  return get('people');
 };
 
 export const getById = (personId) => {
